@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Dimensions,
     SafeAreaView,
@@ -6,19 +6,29 @@ import {
     Text,
     View,
 } from 'react-native';
+import { Avatar, ListItem } from 'react-native-elements'
 import Header from '../../components/Header';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
+const IMAGEN_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 
-const Detalle = () => {
-
+const Detalle = (props) => {
+    const [pokemon, setPokemon] = useState(props.route.params.item)
+    console.log("POKEMON: ", pokemon)
+    const path = pokemon.url.split('/')
+    const imgID = path[6]
     return (
         <SafeAreaView style={styles.container}>
             <Header />
             <View style={{ ...styles.gridRow, flexDirection: 'row' }}>
-                <Text style={{ fontSize: 20 }}>Detalle</Text>
+                <View style={{ WIDTH }}>
+                    <View>
+                        <Text>{pokemon.name}</Text>
+                    </View>
+                    <Avatar size='large' source={{ uri: `${IMAGEN_URL}/${imgID}.png` }} />
+                </View>
             </View>
         </SafeAreaView>
     );
